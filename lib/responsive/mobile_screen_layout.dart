@@ -1,16 +1,93 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:insta/utils/colors.dart';
+import 'package:insta/utils/global_variables.dart';
 
-class MobileScreenLayout extends StatelessWidget {
+class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
+
+  @override
+  State<MobileScreenLayout> createState() => _MobileScreenLayoutState();
+}
+
+class _MobileScreenLayoutState extends State<MobileScreenLayout> {
+  int _page = 0;
+  late PageController pageController;
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("Mobile Screen"),
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: pageController,
+        children: homeScreenItems,
+        onPageChanged: onPageChanged,
       ),
+      bottomNavigationBar: CupertinoTabBar(onTap: navigationTapped, items: [
+        BottomNavigationBarItem(
+          label: "",
+          icon: Icon(
+            Icons.home,
+            color: _page == 0 ? primaryColor : secondaryColor,
+          ),
+          backgroundColor: primaryColor,
+        ),
+        BottomNavigationBarItem(
+          label: "",
+          icon: Icon(
+            Icons.search,
+            color: _page == 1 ? primaryColor : secondaryColor,
+          ),
+          backgroundColor: primaryColor,
+        ),
+        BottomNavigationBarItem(
+          label: "",
+          icon: Icon(
+            Icons.add_circle,
+            color: _page == 2 ? primaryColor : secondaryColor,
+          ),
+          backgroundColor: primaryColor,
+        ),
+        BottomNavigationBarItem(
+          label: "",
+          icon: Icon(
+            Icons.favorite,
+            color: _page == 3 ? primaryColor : secondaryColor,
+          ),
+          backgroundColor: primaryColor,
+        ),
+        BottomNavigationBarItem(
+          label: "",
+          icon: Icon(
+            CupertinoIcons.profile_circled,
+            color: _page == 4 ? primaryColor : secondaryColor,
+          ),
+          backgroundColor: primaryColor,
+        ),
+      ]),
     );
+  }
+
+  void navigationTapped(int page) {
+    pageController.jumpToPage(page);
+  }
+
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
   }
 }
