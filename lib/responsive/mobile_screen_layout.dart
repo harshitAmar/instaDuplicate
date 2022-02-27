@@ -36,48 +36,46 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
         children: homeScreenItems,
         onPageChanged: onPageChanged,
       ),
-      bottomNavigationBar: CupertinoTabBar(onTap: navigationTapped, items: [
-        BottomNavigationBarItem(
-          label: "",
-          icon: Icon(
-            Icons.home,
-            color: _page == 0 ? primaryColor : secondaryColor,
-          ),
-          backgroundColor: primaryColor,
-        ),
-        BottomNavigationBarItem(
-          label: "",
-          icon: Icon(
-            Icons.search,
-            color: _page == 1 ? primaryColor : secondaryColor,
-          ),
-          backgroundColor: primaryColor,
-        ),
-        BottomNavigationBarItem(
-          label: "",
-          icon: Icon(
-            Icons.add_circle,
-            color: _page == 2 ? primaryColor : secondaryColor,
-          ),
-          backgroundColor: primaryColor,
-        ),
-        BottomNavigationBarItem(
-          label: "",
-          icon: Icon(
-            Icons.favorite,
-            color: _page == 3 ? primaryColor : secondaryColor,
-          ),
-          backgroundColor: primaryColor,
-        ),
-        BottomNavigationBarItem(
-          label: "",
-          icon: Icon(
-            CupertinoIcons.profile_circled,
-            color: _page == 4 ? primaryColor : secondaryColor,
-          ),
-          backgroundColor: primaryColor,
-        ),
-      ]),
+      bottomNavigationBar: CupertinoTabBar(
+          backgroundColor: mobileBackgroundColor,
+          onTap: navigationTapped,
+          items: [
+            BottomNavigationBarItem(
+              label: "",
+              icon: Icon(
+                Icons.home,
+                color: _page == 0 ? primaryColor : secondaryColor,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "",
+              icon: Icon(
+                Icons.search,
+                color: _page == 1 ? primaryColor : secondaryColor,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "",
+              icon: Icon(
+                Icons.add_circle,
+                color: _page == 2 ? primaryColor : secondaryColor,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "",
+              icon: Icon(
+                Icons.favorite,
+                color: _page == 3 ? primaryColor : secondaryColor,
+              ),
+            ),
+            BottomNavigationBarItem(
+              label: "",
+              icon: Icon(
+                CupertinoIcons.profile_circled,
+                color: _page == 4 ? primaryColor : secondaryColor,
+              ),
+            ),
+          ]),
     );
   }
 

@@ -37,7 +37,7 @@ class AuthMethod {
             .uploadImageToFireBaseStorage('profilePics', file, false);
         model.User user = model.User(
           bio: bio,
-          userName: userName,
+          username: userName,
           uid: cred.user!.uid,
           email: email,
           photoUrl: photoUrl,
