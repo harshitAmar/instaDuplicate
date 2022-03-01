@@ -2,12 +2,14 @@
 
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:insta/models/user_model.dart';
 import 'package:insta/providers/user_providers.dart';
 import 'package:insta/resources/firestore_methods.dart';
 import 'package:insta/screens/comments_screen.dart';
 import 'package:insta/utils/colors.dart';
+import 'package:insta/utils/utils.dart';
 import 'package:insta/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,13 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+  int commentLength = 0;
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -143,7 +152,9 @@ class _PostCardState extends State<PostCard> {
               ),
               IconButton(
                   onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CommentsScreen())),
+                      builder: (context) => CommentsScreen(
+                            snap: widget.snap,
+                          ))),
                   icon: Icon(
                     Icons.comment_outlined,
                   )),
@@ -199,7 +210,7 @@ class _PostCardState extends State<PostCard> {
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
               child: Text(
-                "view all comments",
+                "view all $commentLength comments",
                 style: TextStyle(
                   fontSize: 16,
                   color: secondaryColor,
@@ -220,5 +231,19 @@ class _PostCardState extends State<PostCard> {
         ],
       ),
     );
+  }
+
+  void getComments() async {
+    try {
+      QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+      commentLength = snap.docs.length;
+    } catch (e) {
+      showSnackBar(e.toString(), context);
+    }
+    setState(() {});
   }
 }
